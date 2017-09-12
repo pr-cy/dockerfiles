@@ -4,6 +4,10 @@ ENV PHALCON_VERSION=2.0.13
 
 # Compile Phalcon
 RUN cd /tmp \
+        && apt-get update \
+        && apt-get install -y libmemcached-dev zlib1g-dev \
+        && pecl install memcache \
+        && docker-php-ext-enable memcache \
         && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
         && tar xvzf phalcon-v$PHALCON_VERSION  \
         && cd cphalcon-phalcon-v$PHALCON_VERSION/build \
