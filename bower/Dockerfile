@@ -1,4 +1,5 @@
 FROM node:alpine
 
-RUN npm install --global bower
+RUN apk add --no-cache git && npm install --global bower
+WORKDIR /app/
 ENTRYPOINT ["bower", "--allow-root"]
