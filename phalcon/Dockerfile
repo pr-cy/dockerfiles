@@ -8,6 +8,7 @@ RUN cd /tmp \
         && apt-get install -y libmemcached-dev zlib1g-dev \
         && pecl install memcache \
         && docker-php-ext-enable memcache \
+        && docker-php-ext-install -j$(nproc) mysql \
         && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
         && tar xvzf phalcon-v$PHALCON_VERSION  \
         && cd cphalcon-phalcon-v$PHALCON_VERSION/build \
