@@ -1,9 +1,10 @@
-FROM prcy/phalcon:2.x
+FROM prcy/phalcon:3.x
 
 RUN \
 	mkdir -p /var/cache/apt/archives/partial && \
 	mkdir -p /var/log/apt && \
 	apt-get update && \
+	apt-get upgrade && \
 	apt-get install -y python python-setuptools && \
 	rm -rf /var/cache/apt/archives/partial && \
 	rm -rf /var/log/apt && \
