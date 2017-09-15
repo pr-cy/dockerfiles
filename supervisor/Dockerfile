@@ -15,4 +15,5 @@ RUN \
 	echo "[include]" >> /etc/supervisor/supervisord.conf && \
 	echo "files = /etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.conf
 
+
 ENTRYPOINT ["supervisord", "--nodaemon", "--configuration", "/etc/supervisor/supervisord.conf"]
