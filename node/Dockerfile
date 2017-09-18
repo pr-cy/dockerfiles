@@ -13,7 +13,7 @@ RUN export NODE_VERSION=v0.10.48 && \
     diff /tmp/pre /tmp/post | grep "^>" | cut -f 2 -d ' ' | \
       xargs echo yum erase -y && \
     yum clean all && \
-    npm install --global bower grunt && \
+    npm install --global bower grunt uglify-js && \
     rm -rf /tmp/*
 
 
