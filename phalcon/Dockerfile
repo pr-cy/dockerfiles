@@ -15,6 +15,7 @@ RUN cd /tmp \
             libmemcachedutil2 \
             libmemcached-dev \
             libz-dev \
+            libssl-dev \
             git \
         && git clone -b php7 https://github.com/php-memcached-dev/php-memcached \
         && cd php-memcached \
@@ -30,6 +31,8 @@ RUN cd /tmp \
             libmemcached-dev \
             libz-dev \
         && apt-get autoremove -y \
+        && pecl install mongodb \
+        && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
         && docker-php-ext-install -j$(nproc) pdo_mysql \
         && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
         && tar xvzf v$PHALCON_VERSION  \
