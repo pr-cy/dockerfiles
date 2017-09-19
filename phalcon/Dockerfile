@@ -5,9 +5,14 @@ ENV PHALCON_VERSION=2.0.13
 # Compile Phalcon
 RUN cd /tmp \
         && apt-get update \
-        && apt-get install -y libmemcached-dev zlib1g-dev \
+        && apt-get install -y \
+            libmemcached-dev \
+            zlib1g-dev \
+            libssl-dev \
         && pecl install memcache \
         && docker-php-ext-enable memcache \
+        && pecl install mongo \
+        && docker-php-ext-enable mongo \
         && docker-php-ext-install -j$(nproc) pdo_mysql \
         && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
         && tar xvzf phalcon-v$PHALCON_VERSION  \
