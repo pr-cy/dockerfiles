@@ -9,12 +9,14 @@ RUN cd /tmp \
             libmemcached-dev \
             zlib1g-dev \
             libssl-dev \
+            libicu-dev \
         && pecl install memcache \
         && docker-php-ext-enable memcache \
         && pecl install mongo \
         && docker-php-ext-enable mongo \
         && docker-php-ext-configure bcmath --enable-bcmath \
-        && docker-php-ext-install -j$(nproc) pdo_mysql bcmath \
+        && docker-php-ext-configure intl \
+        && docker-php-ext-install pdo_mysql bcmath intl \
         && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
         && tar xvzf phalcon-v$PHALCON_VERSION  \
         && cd cphalcon-phalcon-v$PHALCON_VERSION/build \
