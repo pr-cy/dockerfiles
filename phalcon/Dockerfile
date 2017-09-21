@@ -12,7 +12,7 @@ RUN cd /tmp \
         && pecl install memcache \
         && docker-php-ext-enable memcache \
         && pecl install mongo \
-        && docker-php-ext-enable mongo \
+        && docker-php-ext-enable mongo bcmath \
         && docker-php-ext-install -j$(nproc) pdo_mysql \
         && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
         && tar xvzf phalcon-v$PHALCON_VERSION  \
