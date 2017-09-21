@@ -33,7 +33,7 @@ RUN cd /tmp \
         && apt-get autoremove -y \
         && pecl install mongodb \
         && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
-        && docker-php-ext-install -j$(nproc) pdo_mysql \
+        && docker-php-ext-install -j$(nproc) pdo_mysql bcmath \
         && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
         && tar xvzf v$PHALCON_VERSION  \
         && cd cphalcon-$PHALCON_VERSION/build \
