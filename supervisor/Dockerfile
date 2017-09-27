@@ -5,7 +5,7 @@ RUN \
 	mkdir -p /var/log/apt && \
 	mkdir -p /etc/supervisor/conf.d/ && \
 	apt-get update && \
-	apt-get upgrade && \
+	apt-get upgrade -y && \
 	apt-get install -y python python-setuptools && \
 	rm -rf /var/cache/apt/archives/partial && \
 	rm -rf /var/log/apt && \
