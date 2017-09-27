@@ -15,4 +15,6 @@ RUN \
 	echo "[include]" >> /etc/supervisor/supervisord.conf && \
 	echo "files = /etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.conf
 
+ADD wait-for-it.sh /usr/local/bin
+
 ENTRYPOINT ["supervisord", "--nodaemon", "--configuration", "/etc/supervisor/supervisord.conf"]
