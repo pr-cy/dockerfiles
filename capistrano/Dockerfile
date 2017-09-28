@@ -1,6 +1,6 @@
 FROM ruby:alpine
-
-RUN gem install --no-rdoc --no-ri capistrano
-
+RUN apt-get update \
+    && apt-get install -y mercurial \
+    && gem install --no-rdoc --no-ri capistrano
 WORKDIR /app
 CMD ["cap"]
