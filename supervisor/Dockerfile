@@ -16,5 +16,6 @@ RUN \
 	echo "files = /etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.conf
 
 ADD wait-for-it.sh /usr/local/bin
+RUN ["chmod", "+x", "/usr/local/bin/wait-for-it.sh"]
 
 ENTRYPOINT ["supervisord", "--nodaemon", "--configuration", "/etc/supervisor/supervisord.conf"]
