@@ -18,6 +18,8 @@ RUN cd /tmp \
             libssl-dev \
             libicu-dev \
             git \
+        
+        # memcached
         && git clone -b php7 https://github.com/php-memcached-dev/php-memcached \
         && cd php-memcached \
         && phpize \
@@ -32,16 +34,37 @@ RUN cd /tmp \
             libmemcached-dev \
             libz-dev \
         && apt-get autoremove -y \
+        
+        # mongo
         && pecl install mongodb \
         && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
+        
+        # intl, pdo_mysql, bcmath
         && docker-php-ext-configure intl \
         && docker-php-ext-install intl \
         && docker-php-ext-install -j$(nproc) pdo_mysql bcmath \
+
+        # phalcon
         && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
         && tar xvzf v$PHALCON_VERSION  \
         && cd cphalcon-$PHALCON_VERSION/build \
         && ./install \
         && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
+        
+        # xdebug
+        && pecl install xdebug \
+        && docker-php-ext-enable xdebug \
+        && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+        && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+        && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+        && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+        && echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+        && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+        && echo "xdebug.profiler_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+        && echo "xdebug.profiler_output_dir=/tmp/snapshots" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+        && echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+
+        # удаление мусора
         && apt-get autoremove -y \
         && apt-get autoclean -y \
         && apt-get clean -y \
