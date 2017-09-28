@@ -51,6 +51,10 @@ RUN cd /tmp \
         && ./install \
         && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
         
+        # composer
+        && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+        && composer --version \
+        
         # xdebug
         && pecl install xdebug \
         && docker-php-ext-enable xdebug \
