@@ -6,6 +6,7 @@ ENV PHALCON_VERSION=2.0.13
 RUN cd /tmp \
     && apt-get update \
     && apt-get install -y \
+        git \
         libmemcached-dev \
         zlib1g-dev \
         libssl-dev \
