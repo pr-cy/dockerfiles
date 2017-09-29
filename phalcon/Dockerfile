@@ -7,6 +7,7 @@ RUN cd /tmp \
     && apt-get update \
     && apt-get install -y \
         git \
+        zip unzip php-pclzip \
         libmemcached-dev \
         zlib1g-dev \
         libssl-dev \
@@ -31,7 +32,7 @@ RUN cd /tmp \
     && cd cphalcon-phalcon-v$PHALCON_VERSION/build \
     && ./install \
     && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
-    
+
     # xdebug
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
@@ -44,11 +45,10 @@ RUN cd /tmp \
     && echo "xdebug.profiler_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.profiler_output_dir=/tmp/snapshots" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    
+
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer --version \
-
     # garbage collector
     && apt-get autoremove -y \
     && apt-get autoclean -y \
