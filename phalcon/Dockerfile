@@ -49,6 +49,7 @@ RUN cd /tmp \
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer --version \
+
     # garbage collector
     && apt-get autoremove -y \
     && apt-get autoclean -y \
