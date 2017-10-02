@@ -2,6 +2,7 @@
 FROM php:5.6-fpm
 
 ENV PHALCON_VERSION=2.0.13
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN cd /tmp \
     && apt-get update \
