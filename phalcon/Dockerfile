@@ -15,7 +15,7 @@ RUN cd /tmp \
         libz-dev \
         libssl-dev \
         libicu-dev \
-    
+
     # memcached
     && git clone -b php7 https://github.com/php-memcached-dev/php-memcached \
     && cd php-memcached \
@@ -31,11 +31,11 @@ RUN cd /tmp \
         libmemcached-dev \
         libz-dev \
     && apt-get autoremove -y \
-    
+
     # mongo
     && pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
-    
+
     # intl, pdo_mysql, bcmath
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
@@ -47,14 +47,22 @@ RUN cd /tmp \
     && cd cphalcon-$PHALCON_VERSION/build \
     && ./install \
     && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
-    
+
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer --version \
-    
+
     # xdebug
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
+
+    # tideways + graphviz
+    && echo 'deb http://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages debian main' > /etc/apt/sources.list.d/tideways.list \
+    && curl -sS 'https://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages/EEB5E8F4.gpg' | apt-key add - \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -yq install tideways-php tideways-cli \
+    && docker-php-ext-enable tideways \
+    && apt-get install -y graphviz \
 
     # garbage collector
     && apt-get autoremove -y \
