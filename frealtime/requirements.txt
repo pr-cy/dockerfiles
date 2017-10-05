@@ -1,0 +1,16 @@
+aiohttp==2.0.7
+https://github.com/JeckLabs/aiorucaptcha/archive/master.zip
+aioredis
+cchardet
+pyyaml
+msgpack-python
+coloredlogs
+aiosocks
+aioamqp
+elasticsearch
+jinja2
+aiohttp-jinja2
+aiohttp-swagger
+statsd
+motor
+idna

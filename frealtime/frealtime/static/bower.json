@@ -1,0 +1,8 @@
+{
+  "name": "frealtime-bower",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "datatables": "1.10.12"
+  }
+}
