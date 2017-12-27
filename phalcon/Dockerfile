@@ -15,6 +15,7 @@ RUN cd /tmp \
         libz-dev \
         libssl-dev \
         libicu-dev \
+        mercurial \
 
     # memcached
     && git clone -b php7 https://github.com/php-memcached-dev/php-memcached \
