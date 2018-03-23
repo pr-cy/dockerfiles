@@ -131,11 +131,10 @@ if [[ "$HOST" == "" || "$PORT" == "" ]]; then
     echoerr "Error: you need to provide a host and port to test."
     usage
 fi
-TIMEOUT=${TIMEOUT:-15}
+TIMEOUT=${TIMEOUT:-30}
 STRICT=${STRICT:-0}
 CHILD=${CHILD:-0}
 QUIET=${QUIET:-0}
-# check to see if timeout is from busybox?
 # check to see if timeout is from busybox?
 TIMEOUT_PATH=$(realpath $(which timeout))
 if [[ $TIMEOUT_PATH =~ "busybox" ]]; then
