@@ -1,4 +1,4 @@
-aiohttp==2.0.7
+aiohttp==2.3.10
 https://github.com/JeckLabs/aiorucaptcha/archive/master.zip
 aioredis
 cchardet
@@ -7,9 +7,9 @@ msgpack-python
 coloredlogs
 aiosocks
 aioamqp
-elasticsearch
-jinja2
-aiohttp-jinja2
+elasticsearch==5.4.0
+jinja2==2.9.4
+aiohttp-jinja2==0.13.0
 aiohttp-swagger
 statsd
 motor
