@@ -25,7 +25,8 @@ RUN cd /tmp \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl \
     && docker-php-ext-configure gd \
-    && docker-php-ext-install -j$(nproc) pdo_mysql bcmath intl gd \
+    && docker-php-ext-install -j$(nproc) pdo_mysql bcmath intl gd tidy \
+    && docker-php-ext-configure tidy \
 
     # phalcon
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
@@ -35,7 +36,7 @@ RUN cd /tmp \
     && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
 
     # xdebug
-    && pecl install xdebug \
+    && pecl install xdebug-2.5.5 \
     && docker-php-ext-enable xdebug \
 
     # composer
