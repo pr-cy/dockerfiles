@@ -8,7 +8,7 @@ RUN cd /tmp \
     && apt-get update \
     && apt-get install -y \
         git \
-        zip unzip php-pclzip \
+        zip unzip \
         libmemcached-dev \
         zlib1g-dev \
         libssl-dev \
