@@ -16,6 +16,7 @@ RUN cd /tmp \
         libjpeg-dev \
         libpng-dev \
         libfreetype6-dev \
+        libtidy-dev \
 
     # misc php extentions
     && pecl install memcache \
