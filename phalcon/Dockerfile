@@ -1,8 +1,9 @@
 # Pull base image
 FROM php:5.6-fpm
 
-ENV PHALCON_VERSION=2.0.13
+ENV PHALCON_VERSION 2.0.13
 ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN cd /tmp \
     && apt-get update \
@@ -17,6 +18,13 @@ RUN cd /tmp \
         libpng-dev \
         libfreetype6-dev \
         libtidy-dev \
+        mercurial \
+
+    # locales
+    && apt-get install -y locales \
+    && sed -i '/en_US.UTF-8/s/^#//' /etc/locale.gen \
+    && sed -i '/ru_RU.UTF-8/s/^#//' /etc/locale.gen \
+    && locale-gen \
 
     # misc php extentions
     && pecl install memcache \
@@ -58,3 +66,7 @@ RUN cd /tmp \
         /usr/lib/php/20131226 \
         /var/log \
         /var/cache
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
