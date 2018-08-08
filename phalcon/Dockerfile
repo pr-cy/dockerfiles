@@ -3,12 +3,13 @@ FROM php:7.1-fpm
 
 ENV PHALCON_VERSION 3.2.1
 ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN cd /tmp \
     && apt-get update \
     && apt-get install -y \
         git \
-        zip unzip php-pclzip \
+        zip unzip \
         libmemcached11 \
         libmemcachedutil2 \
         libmemcached-dev \
@@ -16,6 +17,13 @@ RUN cd /tmp \
         libssl-dev \
         libicu-dev \
         mercurial \
+        gnupg \
+
+    # locales
+    && apt-get install -y locales \
+    && sed -i '/en_US.UTF-8/s/^#//' /etc/locale.gen \
+    && sed -i '/ru_RU.UTF-8/s/^#//' /etc/locale.gen \
+    && locale-gen \
 
     # memcached
     && git clone -b php7 https://github.com/php-memcached-dev/php-memcached \
@@ -61,7 +69,7 @@ RUN cd /tmp \
     && echo 'deb http://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages debian main' > /etc/apt/sources.list.d/tideways.list \
     && curl -sS 'https://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages/EEB5E8F4.gpg' | apt-key add - \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -yq install tideways-php tideways-cli \
+    && apt-get -yq install tideways-php tideways-cli \
     && docker-php-ext-enable tideways \
     && apt-get install -y graphviz \
 
@@ -79,3 +87,7 @@ RUN cd /tmp \
         /usr/lib/php/20131226 \
         /var/log \
         /var/cache
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
