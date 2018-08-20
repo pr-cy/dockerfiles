@@ -45,10 +45,11 @@ RUN cd /tmp \
     && pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
 
-    # intl, pdo_mysql, bcmath
+    # other extensions
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
     && docker-php-ext-install -j$(nproc) pdo_mysql bcmath \
+    && docker-php-ext-install zip \
 
     # phalcon
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
