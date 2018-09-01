@@ -16,3 +16,4 @@ motor
 idna
 pymystem3
 bs4
+psutil=5.4.7
