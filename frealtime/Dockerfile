@@ -1,5 +1,5 @@
 FROM python:3.5.6
-RUN apt-get update && apt-get install -y gettext-base
+RUN apt-get update && apt-get install -y gettext-base tesseract-ocr
 
 ADD . /app/
 RUN pip install -r /app/requirements.txt \
