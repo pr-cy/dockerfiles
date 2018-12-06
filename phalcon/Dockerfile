@@ -35,7 +35,7 @@ RUN cd /tmp \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl \
     && docker-php-ext-configure gd \
-    && docker-php-ext-install pdo_mysql bcmath intl gd mcrypt tidy \
+    && docker-php-ext-install pdo_mysql bcmath intl gd mcrypt tidy mbstring \
     && docker-php-ext-configure tidy \
 
     # phalcon
