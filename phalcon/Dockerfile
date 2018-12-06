@@ -1,7 +1,7 @@
 # Pull base image
-FROM php:7.1-fpm
+FROM php:5.4-fpm
 
-ENV PHALCON_VERSION 3.2.1
+ENV PHALCON_VERSION 1.2.6
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -10,14 +10,16 @@ RUN cd /tmp \
     && apt-get install -y \
         git \
         zip unzip \
-        libmemcached11 \
-        libmemcachedutil2 \
         libmemcached-dev \
-        libz-dev \
+        zlib1g-dev \
         libssl-dev \
         libicu-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libfreetype6-dev \
+        libmcrypt-dev \
+        libtidy-dev \
         mercurial \
-        gnupg \
 
     # locales
     && apt-get install -y locales \
@@ -25,54 +27,31 @@ RUN cd /tmp \
     && sed -i '/ru_RU.UTF-8/s/^#//' /etc/locale.gen \
     && locale-gen \
 
-    # memcached
-    && git clone -b php7 https://github.com/php-memcached-dev/php-memcached \
-    && cd php-memcached \
-    && phpize \
-    && ./configure \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -rf  php-memcached \
-    && echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini \
-    && apt-get remove -y build-essential libmemcached-dev libz-dev \
-    && apt-get remove -y \
-        libmemcached-dev \
-        libz-dev \
-    && apt-get autoremove -y \
-
-    # mongo
-    && pecl install mongodb \
-    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
-
-    # other extensions
+    # misc php extentions
+    && pecl install memcache \
+    && docker-php-ext-enable memcache \
+    && pecl install mongo \
+    && docker-php-ext-enable mongo \
+    && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl \
-    && docker-php-ext-install -j$(nproc) pdo_mysql bcmath \
-    && docker-php-ext-install zip \
+    && docker-php-ext-configure gd \
+    && docker-php-ext-install pdo_mysql bcmath intl gd mcrypt tidy \
+    && docker-php-ext-configure tidy \
 
     # phalcon
-    && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
-    && tar xvzf v$PHALCON_VERSION  \
-    && cd cphalcon-$PHALCON_VERSION/build \
+    && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
+    && tar xvzf phalcon-v$PHALCON_VERSION  \
+    && cd cphalcon-phalcon-v$PHALCON_VERSION/build \
     && ./install \
     && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
+
+    # xdebug
+    && pecl install xdebug-2.4.1 \
+    && docker-php-ext-enable xdebug \
 
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer --version \
-
-    # xdebug
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-
-    # tideways + graphviz
-    && echo 'deb http://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages debian main' > /etc/apt/sources.list.d/tideways.list \
-    && curl -sS 'https://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages/EEB5E8F4.gpg' | apt-key add - \
-    && apt-get update \
-    && apt-get -yq install tideways-php tideways-cli \
-    && docker-php-ext-enable tideways \
-    && apt-get install -y graphviz \
 
     # garbage collector
     && apt-get autoremove -y \
