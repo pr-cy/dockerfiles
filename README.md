@@ -1,1 +1,1 @@
-# dockerfile for Phalcone 1.2.6
+# dockerfile for Phalcon 1.2.6
