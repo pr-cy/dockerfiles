@@ -16,6 +16,7 @@ RUN cd /tmp \
         libicu-dev \
         libjpeg-dev \
         libpng-dev \
+        libmagickwand-dev \
         libfreetype6-dev \
         libmcrypt-dev \
         libtidy-dev \
@@ -37,6 +38,8 @@ RUN cd /tmp \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/\
     && docker-php-ext-install pdo_mysql bcmath intl gd mcrypt tidy mbstring \
     && docker-php-ext-configure tidy \
+    && pecl install imagick-3.1.1 \
+    && docker-php-ext-enable imagick \
 
     # phalcon
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
