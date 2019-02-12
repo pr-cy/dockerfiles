@@ -67,10 +67,10 @@ RUN cd /tmp \
     && docker-php-ext-enable xdebug \
 
     # tideways + graphviz
-    && echo 'deb http://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages debian main' > /etc/apt/sources.list.d/tideways.list \
-    && curl -sS 'https://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages/EEB5E8F4.gpg' | apt-key add - \
+    && echo 'deb http://s3-eu-west-1.amazonaws.com/tideways/packages debian main' > /etc/apt/sources.list.d/tideways.list \
+    && curl -sS https://s3-eu-west-1.amazonaws.com/tideways/packages/EEB5E8F4.gpg | apt-key add - \
     && apt-get update \
-    && apt-get -yq install tideways-php tideways-cli \
+    && apt-get -yq install tideways-php=4.1.6 tideways-cli \
     && docker-php-ext-enable tideways \
     && apt-get install -y graphviz \
 
