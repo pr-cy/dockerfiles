@@ -19,6 +19,7 @@ RUN cd /tmp \
         libfreetype6-dev \
         libtidy-dev \
         mercurial \
+        libmagickwand-dev \
 
     # locales
     && apt-get install -y locales \
@@ -36,6 +37,8 @@ RUN cd /tmp \
     && docker-php-ext-configure gd \
     && docker-php-ext-install -j$(nproc) pdo_mysql bcmath intl gd tidy \
     && docker-php-ext-configure tidy \
+    && pecl install imagick-3.4.3 \
+    && docker-php-ext-enable imagick \
 
     # phalcon
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/phalcon-v$PHALCON_VERSION \
