@@ -37,7 +37,7 @@ RUN cd /tmp \
     && docker-php-ext-configure gd \
     && docker-php-ext-install -j$(nproc) pdo_mysql bcmath intl gd tidy \
     && docker-php-ext-configure tidy \
-    && pecl install imagick \
+    && pecl install imagick-3.4.3 \
     && docker-php-ext-enable imagick \
 
     # phalcon
