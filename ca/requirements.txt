@@ -1,5 +1,0 @@
-aiohttp==2.0.7
-aioamqp
-aiohttp-swagger
-gensim
-pyyaml
