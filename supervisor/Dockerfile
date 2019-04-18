@@ -1,4 +1,4 @@
-FROM prcy/phalcon:3.x
+FROM prcy/phalcon
 
 RUN \
 	mkdir -p /var/cache/apt/archives/partial && \
