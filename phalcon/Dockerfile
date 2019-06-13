@@ -18,13 +18,12 @@ RUN cd /tmp \
         libicu-dev \
         mercurial \
         gnupg \
-
+        supervisor \
     # locales
     && apt-get install -y locales \
     && sed -i '/en_US.UTF-8/s/^#//' /etc/locale.gen \
     && sed -i '/ru_RU.UTF-8/s/^#//' /etc/locale.gen \
     && locale-gen \
-
     # memcached
     && git clone -b php7 https://github.com/php-memcached-dev/php-memcached \
     && cd php-memcached \
@@ -40,32 +39,26 @@ RUN cd /tmp \
         libmemcached-dev \
         libz-dev \
     && apt-get autoremove -y \
-
     # mongo
     && pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
-
     # other extensions
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
     && docker-php-ext-install -j$(nproc) pdo_mysql bcmath \
     && docker-php-ext-install zip \
-
     # phalcon
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
     && tar xvzf v$PHALCON_VERSION  \
     && cd cphalcon-$PHALCON_VERSION/build \
     && ./install \
     && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
-
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer --version \
-
     # xdebug
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
-
     # tideways + graphviz
     && echo 'deb http://s3-eu-west-1.amazonaws.com/tideways/packages debian main' > /etc/apt/sources.list.d/tideways.list \
     && curl -sS https://s3-eu-west-1.amazonaws.com/tideways/packages/EEB5E8F4.gpg | apt-key add - \
@@ -73,7 +66,6 @@ RUN cd /tmp \
     && apt-get -yq install tideways-php=4.1.6 tideways-cli \
     && docker-php-ext-enable tideways \
     && apt-get install -y graphviz \
-
     # garbage collector
     && apt-get autoremove -y \
     && apt-get autoclean -y \
