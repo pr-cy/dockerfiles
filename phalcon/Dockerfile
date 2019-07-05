@@ -19,6 +19,9 @@ RUN cd /tmp \
         mercurial \
         gnupg \
         supervisor \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
     # locales
     && apt-get install -y locales \
     && sed -i '/en_US.UTF-8/s/^#//' /etc/locale.gen \
@@ -47,6 +50,8 @@ RUN cd /tmp \
     && docker-php-ext-install intl \
     && docker-php-ext-install -j$(nproc) pdo_mysql bcmath \
     && docker-php-ext-install zip \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
     # phalcon
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
     && tar xvzf v$PHALCON_VERSION  \
