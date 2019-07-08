@@ -22,6 +22,7 @@ RUN cd /tmp \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
+        libmagickwand-dev \
     # locales
     && apt-get install -y locales \
     && sed -i '/en_US.UTF-8/s/^#//' /etc/locale.gen \
@@ -52,6 +53,8 @@ RUN cd /tmp \
     && docker-php-ext-install zip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
+    && pecl install imagick-3.4.3 \
+    && docker-php-ext-enable imagick \
     # phalcon
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
     && tar xvzf v$PHALCON_VERSION  \
