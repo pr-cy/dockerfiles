@@ -59,6 +59,7 @@ RUN cd /tmp \
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
     && tar xvzf v$PHALCON_VERSION  \
     && cd cphalcon-$PHALCON_VERSION/build \
+    && export CFLAGS="-O2 -g -fomit-frame-pointer" \
     && ./install \
     && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini \
     # composer
