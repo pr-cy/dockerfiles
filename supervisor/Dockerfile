@@ -6,10 +6,9 @@ RUN \
 	mkdir -p /etc/supervisor/conf.d/ && \
 	apt-get update && \
 	apt-get upgrade -y && \
-	apt-get install -y python python-setuptools && \
+	apt-get install -y python python-pip && \
 	rm -rf /var/cache/apt/archives/partial && \
 	rm -rf /var/log/apt && \
-	easy_install pip && \
 	pip install supervisor==3.0.1 && \
 	echo "[supervisord]" > /etc/supervisor/supervisord.conf && \
 	echo "[include]" >> /etc/supervisor/supervisord.conf && \
