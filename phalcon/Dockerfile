@@ -23,6 +23,7 @@ RUN cd /tmp \
         libjpeg62-turbo-dev \
         libpng-dev \
         libmagickwand-dev \
+        libtidy-dev \
     # locales
     && apt-get install -y locales \
     && sed -i '/en_US.UTF-8/s/^#//' /etc/locale.gen \
@@ -37,7 +38,7 @@ RUN cd /tmp \
     && make install \
     && cd .. \
     && rm -rf  php-memcached \
-    && echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini \
+    && echo "extension=memcached.so" > /usr/local/etc/php/conf.d/memcached.ini \
     && apt-get remove -y build-essential libmemcached-dev libz-dev \
     && apt-get remove -y \
         libmemcached-dev \
@@ -55,6 +56,7 @@ RUN cd /tmp \
     && docker-php-ext-install -j$(nproc) gd \
     && pecl install imagick-3.4.3 \
     && docker-php-ext-enable imagick \
+    && docker-php-ext-install tidy \
     # phalcon
     && curl -sSLO https://codeload.github.com/phalcon/cphalcon/tar.gz/v$PHALCON_VERSION \
     && tar xvzf v$PHALCON_VERSION  \
@@ -73,7 +75,9 @@ RUN cd /tmp \
     && curl -sS https://s3-eu-west-1.amazonaws.com/tideways/packages/EEB5E8F4.gpg | apt-key add - \
     && apt-get update \
     && apt-get -yq install tideways-php=4.1.6 tideways-cli \
-    && docker-php-ext-enable tideways \
+    && cp /usr/lib/tideways/tideways-php-7.1.so $(php -r 'echo ini_get("extension_dir");')/tideways.so \
+    && echo "extension=tideways.so" > /usr/local/etc/php/conf.d/tideways.ini \
+    && echo "tideways.auto_prepend_library=0" >> /usr/local/etc/php/conf.d/tideways.ini \
     && apt-get install -y graphviz \
     # garbage collector
     && apt-get autoremove -y \
