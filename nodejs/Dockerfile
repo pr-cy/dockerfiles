@@ -6,6 +6,10 @@ RUN apk update && \
     python \
     git \
     make \
-    g++ && \
+    g++ \
+    tzdata && \
+    cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime && \
+    echo "Europe/Moscow" >  /etc/timezone && \
+    apk del tzdata && \
     rm -rf /var/cache/apk/*
 
