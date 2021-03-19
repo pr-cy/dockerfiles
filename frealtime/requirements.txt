@@ -8,7 +8,7 @@ coloredlogs
 aiosocks
 aioamqp
 elasticsearch==5.4.0
-jinja2==2.9.4
+jinja2==2.11.3
 aiohttp-jinja2==0.13.0
 aiohttp-swagger
 statsd
